@@ -1,11 +1,13 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Welcome</title>
 </head>
 <body>
-    <h1>Welcome</h1>
+    <h1 th:text="${welcomeMessage}"></h1>
+    <p>Total Bookmarks : <span th:text="${totalBookmarksCount}"></span></p>
+    <p>Total Tags : <span th:text="${totalTagsCount}"></span></p>
 </body>
 </html>
