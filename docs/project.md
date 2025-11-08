@@ -11,17 +11,16 @@ This project manages bookmarks along with tags.
   * Total bookmarks count
   * Total tags count
 * Show bookmark list page with below details:
-  * Bookmark list with below details:
+  * Bookmark list with below details in latest first fashion:
     * Title (on click open bookmark URL in new tab)
     * Tags (on tag click show bookmarks associated with that tag only)
-    * Created By
     * Created On
   * Total bookmarks count
   * Search box to search bookmark with below details:
     * Bookmark title
     * Bookmark tag
 * Show tag list page with below details:
-  * Tag list with below details:
+  * Tag list with below details in alphabetically:
     * Tag name (on tag click show bookmarks associated with that tag only)
   * Total tags count
   * Search box to search tag with below details:
