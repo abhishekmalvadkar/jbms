@@ -2,7 +2,7 @@
 
 This project manages bookmarks along with tags.
 
-## Functional Requirements
+## Functional Requirements (MVP)
 
 * Show welcome page with below details:
   * Welcome greeting message
@@ -33,7 +33,7 @@ This project manages bookmarks along with tags.
 * Login/Logout user
 * Add new tag
 * Add new bookmark with below details:
-  * Title
-  * URL
-  * Tags
+    * Title
+    * URL
+    * Tags
 * Send email to all registered users about new bookmark
