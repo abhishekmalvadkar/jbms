@@ -1,0 +1,10 @@
+Given browser
+When user hit / url
+Then should return welcome thymeleaf html file
+
+>> Given browser
+   When user hit / url
+   Then should return welcome thymeleaf html file with below data in model to show
+     1) welcomeMessage
+     2) totalBookmarksCount
+     3) totalTagsCount
