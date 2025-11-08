@@ -1,0 +1,13 @@
+>> Given browser
+   When user hit /bookmarks url
+   Then should return bookmarks thymeleaf html file
+
+Given browser
+When user hit /bookmarks url
+Then should return bookmarks thymeleaf html file with below data in model to show
+    1) bookmarks as list type with object of below type
+        1) title
+        2) url
+        3) tags
+        4) createdOn
+    2) totalBookmarksCount
