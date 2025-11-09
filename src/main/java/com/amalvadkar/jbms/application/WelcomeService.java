@@ -11,4 +11,13 @@ public class WelcomeService {
     public int totalBookmarkCount() {
         return bookmarkRepository.allBookmarks().size();
     }
+
+    public int totalTagCount() {
+        return bookmarkRepository.allBookmarks()
+                .stream()
+                .flatMap(bookmark -> bookmark.getTags().stream())
+                .distinct()
+                .toList()
+                .size();
+    }
 }

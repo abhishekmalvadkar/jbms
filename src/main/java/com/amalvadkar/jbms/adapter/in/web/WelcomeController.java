@@ -16,7 +16,7 @@ public class WelcomeController {
     public String welcome(Model model){
         model.addAttribute("welcomeMessage", "Welcome to JBMS");
         model.addAttribute("totalBookmarksCount", welcomeService.totalBookmarkCount());
-        model.addAttribute("totalTagsCount", 3);
+        model.addAttribute("totalTagsCount", welcomeService.totalTagCount());
         return "welcome";
     }
 
