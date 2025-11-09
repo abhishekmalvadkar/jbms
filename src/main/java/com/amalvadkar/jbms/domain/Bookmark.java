@@ -3,7 +3,7 @@ package com.amalvadkar.jbms.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -11,6 +11,6 @@ import java.util.List;
 public class Bookmark {
     private String title;
     private String url;
-    private Instant createdOnUtc;
+    private LocalDate createdDate;
     private List<Tag> tags;
 }
