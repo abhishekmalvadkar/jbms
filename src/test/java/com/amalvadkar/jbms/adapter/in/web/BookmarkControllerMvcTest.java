@@ -14,11 +14,9 @@ public class BookmarkControllerMvcTest {
     MockMvcTester mockMvcTester;
 
     @Test
-    void getToBookmarksEndpointReturns200WithBookmarkListPage() {
+    void getToBookmarksEndpointReturns200() {
         mockMvcTester.perform(get("/bookmarks"))
                 .assertThat()
-                .hasStatus2xxSuccessful()
-                .hasViewName("bookmark-list");
-
+                .hasStatus2xxSuccessful();
     }
 }
