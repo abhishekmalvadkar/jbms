@@ -1,3 +1,16 @@
 spring:
   application:
     name: jbms
+jbms :
+  store:
+    bookmarks:
+      - title: 'When One Method Does Too Much: A Deep Dive Into the Long Method Code Smell'
+        url: 'https://tinyurl.com/bdcdvrj7'
+        createdDate: '2025-11-09'
+        tags:
+          - 'code-smells'
+      - title: 'Managing Technical Debt at Many Levels'
+        url: 'https://tinyurl.com/bd9sf5h3'
+        createdDate: '2025-11-08'
+        tags:
+          - 'technical-debt'
