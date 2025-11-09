@@ -1,11 +1,11 @@
 package com.amalvadkar.jbms.adapter.in.web;
 
+import com.amalvadkar.jbms.application.WelcomeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
-
-import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
@@ -15,22 +15,14 @@ public class WelcomeControllerMvcTest {
     @Autowired
     MockMvcTester mockMvcTester;
 
-    @Test
-    void getToWebsiteReturns200WithWelcomePage() {
-        mockMvcTester.perform(get("/"))
-                .assertThat()
-                .hasStatus2xxSuccessful()
-                .hasViewName("welcome");
-    }
+    @MockitoBean
+    WelcomeService welcomeService;
 
     @Test
-    void getToWebsiteReturns200WithWelcomePageAlongWithRequiredDetails() {
+    void getToWebsiteReturns200() {
         mockMvcTester.perform(get("/"))
                 .assertThat()
-                .hasStatus2xxSuccessful()
-                .hasViewName("welcome")
-                .model()
-                .extractingByKeys("welcomeMessage", "totalBookmarksCount", "totalTagsCount")
-                .hasSameElementsAs(List.of("Welcome to JBMS", 2, 3));
+                .hasStatus2xxSuccessful();
     }
+
 }

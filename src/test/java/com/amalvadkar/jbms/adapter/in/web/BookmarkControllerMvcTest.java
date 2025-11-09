@@ -9,7 +9,7 @@ import org.springframework.test.web.servlet.assertj.MockMvcTester;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-@WebMvcTest
+@WebMvcTest(BookmarkController.class)
 public class BookmarkControllerMvcTest {
 
     @Autowired
