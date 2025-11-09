@@ -9,5 +9,7 @@
     <h1 th:text="${welcomeMessage}"></h1>
     <p>Total Bookmarks : <span th:text="${totalBookmarksCount}"></span></p>
     <p>Total Tags : <span th:text="${totalTagsCount}"></span></p>
+    <p>To see all bookmarks <a th:href="@{/bookmarks}">Click here</a></p>
+    <p>To see all tags <a th:href="@{/tags}">Click here</a></p>
 </body>
 </html>

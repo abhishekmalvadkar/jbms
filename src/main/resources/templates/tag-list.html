@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tag List</title>
+</head>
+<body>
+<h1>Tag List</h1>
+<div th:each="tag : ${tags}">
+    <p th:text="${tag.name}"></p>
+</div>
+</body>
+</html>
