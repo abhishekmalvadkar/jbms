@@ -1,6 +1,6 @@
 package com.amalvadkar.jbms.adapter.in.web;
 
-import com.amalvadkar.jbms.application.port.BookmarkService;
+import com.amalvadkar.jbms.application.BookmarkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

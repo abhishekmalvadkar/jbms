@@ -1,5 +1,6 @@
-package com.amalvadkar.jbms.application.port;
+package com.amalvadkar.jbms.application;
 
+import com.amalvadkar.jbms.application.port.BookmarkRepository;
 import com.amalvadkar.jbms.domain.Bookmark;
 import lombok.RequiredArgsConstructor;
 

@@ -1,10 +1,9 @@
 package com.amalvadkar.jbms;
 
+import com.amalvadkar.jbms.adapter.in.web.common.AbstractIT;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class JbmsApplicationTests {
+class JbmsApplicationTests extends AbstractIT {
 
 	@Test
 	void contextLoads() {

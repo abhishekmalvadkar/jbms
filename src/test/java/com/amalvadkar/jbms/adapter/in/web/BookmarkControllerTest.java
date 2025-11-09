@@ -1,8 +1,8 @@
 package com.amalvadkar.jbms.adapter.in.web;
 
 import com.amalvadkar.jbms.adapter.out.InMemoryBookmarkRepository;
+import com.amalvadkar.jbms.application.BookmarkService;
 import com.amalvadkar.jbms.application.port.BookmarkRepository;
-import com.amalvadkar.jbms.application.port.BookmarkService;
 import com.amalvadkar.jbms.domain.Bookmark;
 import org.junit.jupiter.api.Test;
 import org.springframework.ui.ConcurrentModel;

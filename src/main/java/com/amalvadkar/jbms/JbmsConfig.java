@@ -1,10 +1,10 @@
 package com.amalvadkar.jbms;
 
 import com.amalvadkar.jbms.adapter.out.InMemoryBookmarkRepository;
+import com.amalvadkar.jbms.application.BookmarkService;
 import com.amalvadkar.jbms.application.TagService;
 import com.amalvadkar.jbms.application.WelcomeService;
 import com.amalvadkar.jbms.application.port.BookmarkRepository;
-import com.amalvadkar.jbms.application.port.BookmarkService;
 import com.amalvadkar.jbms.domain.Bookmark;
 import com.amalvadkar.jbms.domain.Tag;
 import org.springframework.context.annotation.Bean;
