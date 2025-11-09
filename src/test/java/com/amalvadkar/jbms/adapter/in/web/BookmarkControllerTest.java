@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,8 +43,8 @@ public class BookmarkControllerTest {
     @SuppressWarnings("unchecked")
     @Test
     void bookmarksReturnsModelWithListOfBookmarks() {
-        Bookmark bookmarkOne = new Bookmark("Bookmark 1", "Bookmark 1 url", ZonedDateTime.now(), List.of());
-        Bookmark bookmarkTwo = new Bookmark("Bookmark 2", "Bookmark 2 url", ZonedDateTime.now(), List.of());
+        Bookmark bookmarkOne = new Bookmark("Bookmark 1", "Bookmark 1 url", Instant.now(), List.of());
+        Bookmark bookmarkTwo = new Bookmark("Bookmark 2", "Bookmark 2 url", Instant.now(), List.of());
         BookmarkRepository bookmarkRepository = new InMemoryBookmarkRepository(List.of(bookmarkOne, bookmarkTwo));
         BookmarkService bookmarkService = new BookmarkService(bookmarkRepository);
         BookmarkController bookmarkController = new BookmarkController(bookmarkService);
