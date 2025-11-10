@@ -4,15 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bookmark List</title>
+    <style>
+        body {
+            font-family: magra, Tahoma, Arial;
+        }
+        .bookmark {
+            border : 1px solid;
+            padding: 1px 15px;
+            margin: 15px 1px;
+        }
+        .tag {
+            display: inline-block;
+            margin: 0 2px 2px 0;
+            padding: .2em .5em;
+            background: #ddd;
+            cursor: pointer
+        }
+        .tag:hover {
+            background: #e33;
+            color: #fff;
+        }
+        .bookmark-title {
+            text-decoration: none;
+            color: #303030;
+        }
+        .bookmark-title:hover {
+            color: #e33;
+        }
+    </style>
 </head>
 <body>
 <h1>Bookmark List</h1>
-<div th:each="bookmark : ${bookmarks}">
-    <p><a href="#" target="_blank" th:text="${bookmark.title}"></a></p>
+<div class="bookmark" th:each="bookmark : ${bookmarks}">
+    <h2><a class="bookmark-title" th:href="${bookmark.url}" target="_blank" th:text="${bookmark.title}"></a></h2>
     <span th:each="tag : ${bookmark.tags}">
-        <span th:text="${tag.name}"></span>
+        <span class="tag" th:text="${tag.name}"></span>
     </span>
-    <p th:text="${bookmark.createdDate}"></p>
+    <p th:text="${#temporals.format(bookmark.createdDate, 'dd MMM yyyy')}"></p>
 </div>
 </body>
 </html>
