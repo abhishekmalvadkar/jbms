@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface BookmarkRepository {
     List<Bookmark> allBookmarks();
+    List<Bookmark> byUrl(String url);
 }
