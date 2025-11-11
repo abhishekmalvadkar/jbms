@@ -5,7 +5,6 @@ This project manages bookmarks along with tags.
 ## Functional Requirements (MVP)
 
 * Show welcome page with below details:
-  * Welcome greeting message
   * Click link to see all bookmarks
   * Click link to see all tags
   * Total bookmarks count
