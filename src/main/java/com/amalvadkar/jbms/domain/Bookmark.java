@@ -13,4 +13,9 @@ public class Bookmark {
     private String url;
     private LocalDate createdDate;
     private List<Tag> tags;
+
+    public boolean has(String tagName){
+        return tags.stream()
+                .anyMatch(tag -> tag.getName().equals(tagName));
+    }
 }
