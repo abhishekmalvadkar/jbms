@@ -4,12 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Welcome</title>
+    <style>
+        body {
+           font-family: magra, Tahoma, Arial;
+           margin: 0;
+        }
+       .text-link {
+           text-decoration: none;
+           color: #303030;
+       }
+       .container {
+           border: 1px solid;
+           margin: 10px 10px;
+           padding: 8px 8px;
+           width: 200px;
+           float: left;
+           text-align: center;
+       }
+        .container:hover {
+            background: red;
+            color: #fff;
+        }
+        .logo {
+            background : red;
+            padding: 7px 7px;
+        }
+        .jbms-logo-title {
+            font-size: 2em;
+            font-weight: bold;
+            text-decoration: none;
+            color: #fff;
+        }
+        .jbms-logo-subtitle {
+            font-size: 0.8em;
+            color: #fff;
+            font-weight: bold;
+        }
+        .m-15 {
+            margin: 15px;
+        }
+    </style>
 </head>
 <body>
-    <h1 th:text="${welcomeMessage}"></h1>
-    <p>Total Bookmarks : <span th:text="${totalBookmarksCount}"></span></p>
-    <p>Total Tags : <span th:text="${totalTagsCount}"></span></p>
-    <p>To see all bookmarks <a th:href="@{/bookmarks}">Click here</a></p>
-    <p>To see all tags <a th:href="@{/tags}">Click here</a></p>
+<div class="logo">
+    <a class="jbms-logo-title" th:href="@{/}">JBMS</a><br>
+    <span class="jbms-logo-subtitle">Manage bookmarks</span>
+</div>
+<div class="m-15"><a class="text-link container" th:href="@{/bookmarks}"><h2>Bookmarks</h2>
+    <h3 th:text="${totalBookmarksCount}"></h3></a>
+    <a class="text-link container" th:href="@{/tags}"><h2>Tags</h2>
+        <h3 th:text="${totalTagsCount}" }></h3></a></div>
 </body>
 </html>
