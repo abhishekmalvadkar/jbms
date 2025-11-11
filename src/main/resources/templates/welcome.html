@@ -45,14 +45,48 @@
         }
     </style>
 </head>
-<body>
 <div class="logo">
     <a class="jbms-logo-title" th:href="@{/}">JBMS</a><br>
     <span class="jbms-logo-subtitle">Manage bookmarks</span>
 </div>
-<div class="m-15"><a class="text-link container" th:href="@{/bookmarks}"><h2>Bookmarks</h2>
-    <h3 th:text="${totalBookmarksCount}"></h3></a>
-    <a class="text-link container" th:href="@{/tags}"><h2>Tags</h2>
-        <h3 th:text="${totalTagsCount}" }></h3></a></div>
-</body>
+
+<div class="m-15">
+    <a class="text-link container" th:href="@{/bookmarks}">
+        <h2>Bookmarks</h2>
+        <h3 id="bookmarkCounter"
+            th:attr="data-target=${totalBookmarksCount}">0</h3>
+    </a>
+
+    <a class="text-link container" th:href="@{/tags}">
+        <h2>Tags</h2>
+        <h3 id="tagCounter"
+            th:attr="data-target=${totalTagsCount}">0</h3>
+    </a>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Function to animate any counter
+        function animateCounter(counterId) {
+            const el = document.getElementById(counterId);
+            const target = +el.getAttribute("data-target");
+            let count = 0;
+            const duration = 1500; // total animation time (ms)
+            const stepTime = Math.max(Math.floor(duration / target), 1);
+
+            const timer = setInterval(() => {
+                count++;
+                el.textContent = count;
+                if (count >= target) {
+                    clearInterval(timer);
+                    el.textContent = target; // ensure exact stop
+                }
+            }, stepTime);
+        }
+
+        // Animate both counters
+        animateCounter("bookmarkCounter");
+        animateCounter("tagCounter");
+    });
+</script>
 </html>
