@@ -78,6 +78,21 @@ public class BookmarkControllerTest {
             assertThat(bookmarks.getFirst().getCreatedDate()).hasYear(2025);
         }
 
+        @SuppressWarnings("unchecked")
+        @Test
+        void bookmarksReturnsModelWithBookmarksCount() {
+            Bookmark bookmarkOne = new Bookmark("Bookmark 1", "Bookmark 1 url", LocalDate.of(2024, 11, 10), List.of());
+            Bookmark bookmarkTwo = new Bookmark("Bookmark 2", "Bookmark 2 url", LocalDate.of(2025,10,11), List.of());
+            BookmarkRepository bookmarkRepository = new InMemoryBookmarkRepository(List.of(bookmarkOne, bookmarkTwo));
+            BookmarkService bookmarkService = new BookmarkService(bookmarkRepository);
+            BookmarkController bookmarkController = new BookmarkController(bookmarkService);
+            Model model = new ConcurrentModel();
+
+            bookmarkController.bookmarks(model,null,null);
+
+            assertThat(model.getAttribute("bookmarksCount")).isEqualTo(2);
+        }
+
     }
 
     @Nested
