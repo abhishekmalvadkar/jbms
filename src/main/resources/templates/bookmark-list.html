@@ -81,7 +81,7 @@
 
     <h2 class="m-15">Bookmark List</h2>
     <form th:action="@{/bookmarks}" method="get" class="m-15">
-        <input class="search-input"  type="text" name="searchText"  placeholder="Search" >
+        <input class="search-input"  type="text" name="searchText"  placeholder="Search" th:value="${searchText}">
         <button class="search-button" type="submit">Search</button>
         <p class="text-red text-bold" th:if="${!#strings.isEmpty(validationMessage)}" th:text="${validationMessage}"></p>
     </form>
