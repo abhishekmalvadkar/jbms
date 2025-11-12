@@ -15,7 +15,7 @@ public class BookmarkControllerMvcTest extends AbstractMT {
     BookmarkService bookmarkService;
 
     @Test
-    void getToBookmarksEndpointReturns200() {
+    void getToBookmarksEndpointReturns200Ok() {
         mockMvcTester.perform(get("/bookmarks"))
                 .assertThat()
                 .hasStatus2xxSuccessful();
@@ -23,7 +23,8 @@ public class BookmarkControllerMvcTest extends AbstractMT {
 
     @Test
     void getToBookmarksBasedOnTagEndpointReturns200() {
-        mockMvcTester.perform(get("/bookmarks").param("tagName","java"))
+        mockMvcTester.perform(get("/bookmarks")
+                        .param("tagName","java"))
                 .assertThat()
                 .hasStatus2xxSuccessful();
     }

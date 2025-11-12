@@ -19,13 +19,24 @@ public class BookmarkController {
 
     @GetMapping("/bookmarks")
     public String bookmarks(Model model,
-                            @RequestParam(value = "tagName", required = false) String tagName,
+                            @RequestParam(value = "tagName", required = false) String selectedTag,
                             @RequestParam(value = "searchText", required = false) String searchText) {
-        if( Objects.nonNull(searchText) && searchText.isEmpty()) model.addAttribute("validationMessage","Search text is required");
-        if(Objects.nonNull(searchText) &&!searchText.isEmpty()) model.addAttribute("searchText", searchText);
-        List<Bookmark> bookmarks = bookmarkService.findBookmarks(tagName, searchText);
+        if( Objects.nonNull(searchText) && searchText.isEmpty()) {
+            model.addAttribute("validationMessage","Search text is required");
+        }
+        if(Objects.nonNull(searchText) &&!searchText.isEmpty()) {
+            model.addAttribute("searchText", searchText);
+        }
+        List<Bookmark> bookmarks = bookmarkService.findBookmarks(selectedTag, searchText);
         model.addAttribute("bookmarks", bookmarks);
         model.addAttribute("bookmarksCount", bookmarks.size());
+        if (userHas(selectedTag)) {
+            model.addAttribute("selectedTag", selectedTag);
+        }
         return "bookmark-list";
+    }
+
+    private static boolean userHas(String selectedTag) {
+        return Objects.nonNull(selectedTag);
     }
 }

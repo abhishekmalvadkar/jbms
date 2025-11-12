@@ -88,6 +88,7 @@
 
     <p class="m-15 text-green text-bold">Total Records : <span th:text="${bookmarksCount}"></span></p>
     <p class="m-15 text-bold" th:if="${!#strings.isEmpty(searchText)}" th:text="'Searched By : ' + ${searchText}"></p>
+    <p class="m-15 text-bold" th:if="${!#strings.isEmpty(selectedTag)}" th:text="'Selected Tag : ' + ${selectedTag}"></p>
     <div class="bookmark m-15" th:each="bookmark : ${bookmarks}">
         <h2><a class="text-link" th:href="${bookmark.url}" target="_blank" th:text="${bookmark.title}"></a></h2>
         <span th:each="tag : ${bookmark.tags}">

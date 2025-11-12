@@ -74,8 +74,9 @@ public class BookmarkControllerTest {
         assertThat(bookmarks.getFirst().getCreatedDate()).hasYear(2025);
     }
 
+    @SuppressWarnings("unchecked")
     @Test
-    void bookmarksReturnsModelWithListOfBookmarksBasedOnTagWithDateWiseDescOrder() {
+    void bookmarksReturnsModelWithListOfBookmarksBasedOnSelectedTag() {
         Bookmark bookmarkOne = new Bookmark("Bookmark 1", "Bookmark 1 url", LocalDate.of(2024, 11, 10), List.of(new Tag("java")));
         Bookmark bookmarkTwo = new Bookmark("Bookmark 2", "Bookmark 2 url", LocalDate.of(2025,10,11), List.of(new Tag("spring")));
         BookmarkRepository bookmarkRepository = new InMemoryBookmarkRepository(List.of(bookmarkOne, bookmarkTwo));
@@ -87,6 +88,26 @@ public class BookmarkControllerTest {
 
         List<Bookmark> bookmarks = (List<Bookmark>) model.getAttribute("bookmarks");
         assertThat(bookmarks).hasSize(1);
+        assertThat(bookmarks.getFirst().getTitle()).isEqualTo("Bookmark 1");
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    void givenBookmarkListPageWhenSelectedTagThenSelectedTagShouldReturnInModelAlongWithBookmarks() {
+        Bookmark bookmarkOne = new Bookmark("Bookmark 1", "Bookmark 1 url", LocalDate.of(2024, 11, 10), List.of(new Tag("java")));
+        Bookmark bookmarkTwo = new Bookmark("Bookmark 2", "Bookmark 2 url", LocalDate.of(2025,10,11), List.of(new Tag("spring")));
+        BookmarkRepository bookmarkRepository = new InMemoryBookmarkRepository(List.of(bookmarkOne, bookmarkTwo));
+        BookmarkService bookmarkService = new BookmarkService(bookmarkRepository);
+        BookmarkController bookmarkController = new BookmarkController(bookmarkService);
+        Model model = new ConcurrentModel();
+
+        bookmarkController.bookmarks(model,"java",null);
+
+        List<Bookmark> bookmarks = (List<Bookmark>) model.getAttribute("bookmarks");
+        String selectedTag = (String) model.getAttribute("selectedTag");
+        assertThat(bookmarks).hasSize(1);
+        assertThat(bookmarks.getFirst().getTitle()).isEqualTo("Bookmark 1");
+        assertThat(selectedTag).isEqualTo("java");
     }
     @Test
     void bookmarksReturnsBySearchTextBasedOnTitle() {
@@ -134,9 +155,5 @@ public class BookmarkControllerTest {
         String validationMessage = model.getAttribute("validationMessage").toString();
         assertThat(validationMessage).isEqualTo("Search text is required");
     }
-
-
-
-
 
 }
