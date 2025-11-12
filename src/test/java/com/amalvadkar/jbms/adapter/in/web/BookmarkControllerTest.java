@@ -100,7 +100,7 @@ public class BookmarkControllerTest {
 
         @SuppressWarnings("unchecked")
         @Test
-        void bookmarksReturnsModelWithListOfBookmarksBasedOnSelectedTag() {
+        void bookmarksReturnsModelWithListOfBookmarksBasedOnSelectedTagAlongWithBookmarksCount() {
             Bookmark bookmarkOne = new Bookmark("Bookmark 1", "Bookmark 1 url", LocalDate.of(2024, 11, 10), List.of(new Tag("java")));
             Bookmark bookmarkTwo = new Bookmark("Bookmark 2", "Bookmark 2 url", LocalDate.of(2025,10,11), List.of(new Tag("spring")));
             BookmarkRepository bookmarkRepository = new InMemoryBookmarkRepository(List.of(bookmarkOne, bookmarkTwo));
@@ -113,6 +113,7 @@ public class BookmarkControllerTest {
             List<Bookmark> bookmarks = (List<Bookmark>) model.getAttribute("bookmarks");
             assertThat(bookmarks).hasSize(1);
             assertThat(bookmarks.getFirst().getTitle()).isEqualTo("Bookmark 1");
+            assertThat(model.getAttribute("bookmarksCount")).isEqualTo(1);
         }
 
         @SuppressWarnings("unchecked")
@@ -141,7 +142,7 @@ public class BookmarkControllerTest {
 
         @SuppressWarnings("unchecked")
         @Test
-        void bookmarksReturnsBySearchTextBasedOnTitle() {
+        void bookmarksReturnsBookmarksBySearchedTextBasedOnBookmarksTitle() {
             Bookmark bookmarkOne = new Bookmark("Bookmark 1", "Bookmark 1 url", LocalDate.of(2024, 11, 10), List.of(new Tag("java")));
             Bookmark bookmarkTwo = new Bookmark("test 2", "Bookmark 2 url", LocalDate.of(2025,10,11), List.of(new Tag("spring")));
             BookmarkRepository bookmarkRepository = new InMemoryBookmarkRepository(List.of(bookmarkOne, bookmarkTwo));
@@ -153,11 +154,12 @@ public class BookmarkControllerTest {
 
             List<Bookmark> bookmarks = (List<Bookmark>) model.getAttribute("bookmarks");
             assertThat(bookmarks).hasSize(1);
+            assertThat(bookmarks.getFirst().getTitle()).isEqualTo("Bookmark 1");
         }
 
         @SuppressWarnings("unchecked")
         @Test
-        void bookmarksReturnsBySearchTextBasedOnTag() {
+        void bookmarksReturnsBookmarksBySearchedTextBasedOnTagName() {
             Bookmark bookmarkOne = new Bookmark("Bookmark 1", "Bookmark 1 url", LocalDate.of(2024, 11, 10), List.of(new Tag("java")));
             Bookmark bookmarkTwo = new Bookmark("test 2", "Bookmark 2 url", LocalDate.of(2025,10,11), List.of(new Tag("spring")));
             BookmarkRepository bookmarkRepository = new InMemoryBookmarkRepository(List.of(bookmarkOne, bookmarkTwo));
@@ -169,11 +171,12 @@ public class BookmarkControllerTest {
 
             List<Bookmark> bookmarks = (List<Bookmark>) model.getAttribute("bookmarks");
             assertThat(bookmarks).hasSize(1);
+            assertThat(bookmarks.getFirst().getTitle()).isEqualTo("test 2");
         }
 
         @SuppressWarnings("unchecked")
         @Test
-        void bookmarksReturnsBySearchTextIfSearchTextEmpty() {
+        void bookmarksShouldAddSearchTextRequiredMessageInModelIfUserClickedOnSearchButtonWithoutEnterSearchText() {
             Bookmark bookmarkOne = new Bookmark("Bookmark 1", "Bookmark 1 url", LocalDate.of(2024, 11, 10), List.of(new Tag("java")));
             Bookmark bookmarkTwo = new Bookmark("test 2", "Bookmark 2 url", LocalDate.of(2025,10,11), List.of(new Tag("spring")));
             BookmarkRepository bookmarkRepository = new InMemoryBookmarkRepository(List.of(bookmarkOne, bookmarkTwo));
@@ -187,6 +190,21 @@ public class BookmarkControllerTest {
             assertThat(bookmarks).hasSize(2);
             String validationMessage = (String) model.getAttribute("validationMessage");
             assertThat(validationMessage).isEqualTo("Search text is required");
+        }
+
+        @SuppressWarnings("unchecked")
+        @Test
+        void shouldAddSearchedTextInModelIfUserSearchedSomethingToShowOnUIAsSearchedByAndAlsoInSearchBox() {
+            Bookmark bookmarkOne = new Bookmark("Bookmark 1", "Bookmark 1 url", LocalDate.of(2024, 11, 10), List.of(new Tag("java")));
+            Bookmark bookmarkTwo = new Bookmark("test 2", "Bookmark 2 url", LocalDate.of(2025,10,11), List.of(new Tag("spring")));
+            BookmarkRepository bookmarkRepository = new InMemoryBookmarkRepository(List.of(bookmarkOne, bookmarkTwo));
+            BookmarkService bookmarkService = new BookmarkService(bookmarkRepository);
+            BookmarkController bookmarkController = new BookmarkController(bookmarkService);
+            Model model = new ConcurrentModel();
+
+            bookmarkController.bookmarks(model,null,"ing");
+
+            assertThat(model.getAttribute("searchText")).isEqualTo("ing");
         }
 
     }
