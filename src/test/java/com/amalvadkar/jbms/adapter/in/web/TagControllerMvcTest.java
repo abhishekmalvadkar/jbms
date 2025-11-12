@@ -15,15 +15,16 @@ public class TagControllerMvcTest extends AbstractMT {
     TagService tagService;
 
     @Test
-    void getToTagEndpointReturns200() {
+    void getToTagsEndpointReturns200Ok() {
         mockMvcTester.perform(get("/tags"))
                 .assertThat()
                 .hasStatus2xxSuccessful();
     }
 
     @Test
-    void getToTagEndpointBasedOnSearchTextReturns200() {
-        mockMvcTester.perform(get("/tags").param("searchText","search"))
+    void getToTagsEndpointBasedOnSearchTextReturns200Ok() {
+        mockMvcTester.perform(get("/tags")
+                        .param("searchText","search"))
                 .assertThat()
                 .hasStatus2xxSuccessful();
     }
