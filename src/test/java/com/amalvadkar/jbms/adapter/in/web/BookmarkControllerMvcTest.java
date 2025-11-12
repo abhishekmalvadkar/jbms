@@ -28,4 +28,12 @@ public class BookmarkControllerMvcTest extends AbstractMT {
                 .assertThat()
                 .hasStatus2xxSuccessful();
     }
+
+    @Test
+    void getToBookmarksBasedOnSearchTextEndpointReturns200Ok() {
+        mockMvcTester.perform(get("/bookmarks")
+                        .param("searchText","java"))
+                .assertThat()
+                .hasStatus2xxSuccessful();
+    }
 }
