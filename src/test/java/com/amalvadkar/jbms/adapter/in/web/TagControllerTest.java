@@ -26,9 +26,52 @@ public class TagControllerTest {
         TagController tagController = new TagController(tagService);
         Model concurrentModel = new ConcurrentModel();
 
-        tagController.tags(concurrentModel);
+        tagController.tags(concurrentModel,null);
 
         List<Tag> tags = (List<Tag>) concurrentModel.getAttribute("tags");
         assertThat(tags).isEmpty();
+    }
+    @Test
+    void tagsShouldReturnModelWithTagsBasedOnSearchText() {
+        Bookmark bookmarkOne = new Bookmark("Bookmark 1", "Bookmark 1 url", LocalDate.now(), List.of(new Tag("Spring")));
+        Bookmark bookmarkTwo = new Bookmark("Bookmark 2", "Bookmark 2 url", LocalDate.now(), List.of(new Tag("jdbc")));
+        BookmarkRepository bookmarkRepository = new InMemoryBookmarkRepository(List.of(bookmarkOne, bookmarkTwo));
+        TagService tagService = new TagService(bookmarkRepository);
+        TagController tagController = new TagController(tagService);
+        Model concurrentModel = new ConcurrentModel();
+
+        tagController.tags(concurrentModel, "bc");
+
+        List<Tag> tags = (List<Tag>) concurrentModel.getAttribute("tags");
+        assertThat(tags).hasSize(1);
+    }
+
+    @Test
+    void tagsShouldReturnModelWithTagsBasedOnSearchTextIfSearchTextEmpty() {
+        Bookmark bookmarkOne = new Bookmark("Bookmark 1", "Bookmark 1 url", LocalDate.now(), List.of(new Tag("Spring")));
+        Bookmark bookmarkTwo = new Bookmark("Bookmark 2", "Bookmark 2 url", LocalDate.now(), List.of(new Tag("jdbc")));
+        BookmarkRepository bookmarkRepository = new InMemoryBookmarkRepository(List.of(bookmarkOne, bookmarkTwo));
+        TagService tagService = new TagService(bookmarkRepository);
+        TagController tagController = new TagController(tagService);
+        Model concurrentModel = new ConcurrentModel();
+
+        tagController.tags(concurrentModel, "");
+
+        List<Tag> tags = (List<Tag>) concurrentModel.getAttribute("tags");
+        assertThat(tags).hasSize(2);
+        assertThat(concurrentModel.getAttribute("validationMessage")).isEqualTo("Search text is required");
+    }
+    @Test
+    void tagsShouldReturnModelWithTagsCount() {
+        Bookmark bookmarkOne = new Bookmark("Bookmark 1", "Bookmark 1 url", LocalDate.now(), List.of(new Tag("Spring")));
+        Bookmark bookmarkTwo = new Bookmark("Bookmark 2", "Bookmark 2 url", LocalDate.now(), List.of(new Tag("jdbc")));
+        BookmarkRepository bookmarkRepository = new InMemoryBookmarkRepository(List.of(bookmarkOne, bookmarkTwo));
+        TagService tagService = new TagService(bookmarkRepository);
+        TagController tagController = new TagController(tagService);
+        Model concurrentModel = new ConcurrentModel();
+
+        tagController.tags(concurrentModel, "");
+
+        assertThat(concurrentModel.getAttribute("tagsCount")).isEqualTo(2);
     }
 }

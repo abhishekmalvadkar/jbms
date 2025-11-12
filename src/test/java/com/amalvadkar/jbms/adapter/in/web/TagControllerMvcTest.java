@@ -20,4 +20,11 @@ public class TagControllerMvcTest extends AbstractMT {
                 .assertThat()
                 .hasStatus2xxSuccessful();
     }
+
+    @Test
+    void getToTagEndpointBasedOnSearchTextReturns200() {
+        mockMvcTester.perform(get("/tags").param("searchText","search"))
+                .assertThat()
+                .hasStatus2xxSuccessful();
+    }
 }

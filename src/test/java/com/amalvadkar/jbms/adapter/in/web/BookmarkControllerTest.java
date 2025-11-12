@@ -22,7 +22,7 @@ public class BookmarkControllerTest {
         BookmarkService bookmarkService = new BookmarkService(bookmarkRepository);
         BookmarkController bookmarkController = new BookmarkController(bookmarkService);
 
-        String viewName = bookmarkController.bookmarks(new ConcurrentModel(),null);
+        String viewName = bookmarkController.bookmarks(new ConcurrentModel(),null,null);
 
         assertThat(viewName).isEqualTo("bookmark-list");
     }
@@ -35,7 +35,7 @@ public class BookmarkControllerTest {
         BookmarkController bookmarkController = new BookmarkController(bookmarkService);
         Model model = new ConcurrentModel();
 
-        bookmarkController.bookmarks(model,null);
+        bookmarkController.bookmarks(model,null,null);
 
         List<Bookmark> bookmarks = (List<Bookmark>) model.getAttribute("bookmarks");
         assertThat(bookmarks).isEmpty();
@@ -51,7 +51,7 @@ public class BookmarkControllerTest {
         BookmarkController bookmarkController = new BookmarkController(bookmarkService);
         Model model = new ConcurrentModel();
 
-        bookmarkController.bookmarks(model,null);
+        bookmarkController.bookmarks(model,null,null);
 
         List<Bookmark> bookmarks = (List<Bookmark>) model.getAttribute("bookmarks");
         assertThat(bookmarks).hasSize(2);
@@ -67,7 +67,7 @@ public class BookmarkControllerTest {
         BookmarkController bookmarkController = new BookmarkController(bookmarkService);
         Model model = new ConcurrentModel();
 
-        bookmarkController.bookmarks(model,null);
+        bookmarkController.bookmarks(model,null,null);
 
         List<Bookmark> bookmarks = (List<Bookmark>) model.getAttribute("bookmarks");
         assertThat(bookmarks).hasSize(2);
@@ -83,10 +83,56 @@ public class BookmarkControllerTest {
         BookmarkController bookmarkController = new BookmarkController(bookmarkService);
         Model model = new ConcurrentModel();
 
-        bookmarkController.bookmarks(model,"java");
+        bookmarkController.bookmarks(model,"java",null);
 
         List<Bookmark> bookmarks = (List<Bookmark>) model.getAttribute("bookmarks");
         assertThat(bookmarks).hasSize(1);
+    }
+    @Test
+    void bookmarksReturnsBySearchTextBasedOnTitle() {
+        Bookmark bookmarkOne = new Bookmark("Bookmark 1", "Bookmark 1 url", LocalDate.of(2024, 11, 10), List.of(new Tag("java")));
+        Bookmark bookmarkTwo = new Bookmark("test 2", "Bookmark 2 url", LocalDate.of(2025,10,11), List.of(new Tag("spring")));
+        BookmarkRepository bookmarkRepository = new InMemoryBookmarkRepository(List.of(bookmarkOne, bookmarkTwo));
+        BookmarkService bookmarkService = new BookmarkService(bookmarkRepository);
+        BookmarkController bookmarkController = new BookmarkController(bookmarkService);
+        Model model = new ConcurrentModel();
+
+        bookmarkController.bookmarks(model,null,"oo");
+
+        List<Bookmark> bookmarks = (List<Bookmark>) model.getAttribute("bookmarks");
+        assertThat(bookmarks).hasSize(1);
+    }
+
+    @Test
+    void bookmarksReturnsBySearchTextBasedOnTag() {
+        Bookmark bookmarkOne = new Bookmark("Bookmark 1", "Bookmark 1 url", LocalDate.of(2024, 11, 10), List.of(new Tag("java")));
+        Bookmark bookmarkTwo = new Bookmark("test 2", "Bookmark 2 url", LocalDate.of(2025,10,11), List.of(new Tag("spring")));
+        BookmarkRepository bookmarkRepository = new InMemoryBookmarkRepository(List.of(bookmarkOne, bookmarkTwo));
+        BookmarkService bookmarkService = new BookmarkService(bookmarkRepository);
+        BookmarkController bookmarkController = new BookmarkController(bookmarkService);
+        Model model = new ConcurrentModel();
+
+        bookmarkController.bookmarks(model,null,"ing");
+
+        List<Bookmark> bookmarks = (List<Bookmark>) model.getAttribute("bookmarks");
+        assertThat(bookmarks).hasSize(1);
+    }
+
+    @Test
+    void bookmarksReturnsBySearchTextIfSearchTextEmpty() {
+        Bookmark bookmarkOne = new Bookmark("Bookmark 1", "Bookmark 1 url", LocalDate.of(2024, 11, 10), List.of(new Tag("java")));
+        Bookmark bookmarkTwo = new Bookmark("test 2", "Bookmark 2 url", LocalDate.of(2025,10,11), List.of(new Tag("spring")));
+        BookmarkRepository bookmarkRepository = new InMemoryBookmarkRepository(List.of(bookmarkOne, bookmarkTwo));
+        BookmarkService bookmarkService = new BookmarkService(bookmarkRepository);
+        BookmarkController bookmarkController = new BookmarkController(bookmarkService);
+        Model model = new ConcurrentModel();
+
+        bookmarkController.bookmarks(model,null,"");
+
+        List<Bookmark> bookmarks = (List<Bookmark>) model.getAttribute("bookmarks");
+        assertThat(bookmarks).hasSize(2);
+        String validationMessage = model.getAttribute("validationMessage").toString();
+        assertThat(validationMessage).isEqualTo("Search text is required");
     }
 
 

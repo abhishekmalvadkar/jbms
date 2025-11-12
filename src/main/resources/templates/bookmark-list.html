@@ -51,6 +51,26 @@
         .m-15 {
             margin: 15px;
         }
+        .search-input {
+            padding: 6px 10px;
+        }
+        .search-button {
+            padding: 8px 22px;
+            background: red;
+            border: none;
+            color: #fff;
+            font-weight: bold;
+            cursor:pointer;
+        }
+        .text-green{
+            color: #50d30f;
+        }
+        .text-red{
+           color: red;
+        }
+        .text-bold {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -58,7 +78,16 @@
         <a class="jbms-logo-title" th:href="@{/}">JBMS</a><br>
         <span class="jbms-logo-subtitle">Manage bookmarks</span>
     </div>
+
     <h2 class="m-15">Bookmark List</h2>
+    <form th:action="@{/bookmarks}" method="get" class="m-15">
+        <input class="search-input"  type="text" name="searchText"  placeholder="Search" >
+        <button class="search-button" type="submit">Search</button>
+        <p class="text-red text-bold" th:if="${!#strings.isEmpty(validationMessage)}" th:text="${validationMessage}"></p>
+    </form>
+
+    <p class="m-15 text-green text-bold">Total Records : <span th:text="${bookmarksCount}"></span></p>
+    <p class="m-15 text-bold" th:if="${!#strings.isEmpty(searchText)}" th:text="'Searched By : ' + ${searchText}"></p>
     <div class="bookmark m-15" th:each="bookmark : ${bookmarks}">
         <h2><a class="text-link" th:href="${bookmark.url}" target="_blank" th:text="${bookmark.title}"></a></h2>
         <span th:each="tag : ${bookmark.tags}">

@@ -9,4 +9,8 @@ import lombok.Getter;
 @EqualsAndHashCode
 public class Tag {
     private String name;
+
+    public boolean tagNameContains(String tagNamePart) {
+        return name.toLowerCase().contains(tagNamePart.toLowerCase());
+    }
 }
