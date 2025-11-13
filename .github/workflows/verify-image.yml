@@ -18,6 +18,21 @@ jobs:
       - name: Run jbms image as container in detached mode
         run: docker run --name jbms -p 8080:8080 -d ghcr.io/abhishekmalvadkar/jbms:latest
 
+      - name: Wait for container to become healthy
+        run: |
+            echo "Waiting for container to be ready..."
+            for i in {1..30}; do
+              if curl -s http://localhost:8080 > /dev/null; then
+                echo "Container is up!"
+                exit 0
+              fi
+              echo "Still waiting ($i)..."
+              sleep 2
+            done
+            echo "Container failed to start in time"
+            docker logs jbms
+            exit 1
+
       - name: Show all running container
         run: docker ps
 
