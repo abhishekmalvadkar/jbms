@@ -15,6 +15,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SuppressWarnings("unchecked")
 public class TagControllerTest {
 
     @Nested
@@ -22,7 +23,7 @@ public class TagControllerTest {
 
         @SuppressWarnings("unchecked")
         @Test
-        void tagsShouldReturnModelWithTags() {
+        void tagsShouldReturnModelWithEmptyTags() {
             Bookmark bookmarkOne = new Bookmark("Bookmark 1", "Bookmark 1 url", LocalDate.now(), List.of());
             Bookmark bookmarkTwo = new Bookmark("Bookmark 2", "Bookmark 2 url", LocalDate.now(), List.of());
             BookmarkRepository bookmarkRepository = new InMemoryBookmarkRepository(List.of(bookmarkOne, bookmarkTwo));
@@ -34,6 +35,22 @@ public class TagControllerTest {
 
             List<Tag> tags = (List<Tag>) concurrentModel.getAttribute("tags");
             assertThat(tags).isEmpty();
+        }
+
+        @Test
+        void tagsShouldReturnModelWithTags() {
+            Bookmark bookmarkOne = new Bookmark("Bookmark 1", "Bookmark 1 url", LocalDate.now(), List.of(new Tag("Spring")));
+            Bookmark bookmarkTwo = new Bookmark("Bookmark 2", "Bookmark 2 url", LocalDate.now(), List.of(new Tag("jdbc")));
+            BookmarkRepository bookmarkRepository = new InMemoryBookmarkRepository(List.of(bookmarkOne, bookmarkTwo));
+            TagService tagService = new TagService(bookmarkRepository);
+            TagController tagController = new TagController(tagService);
+            Model model = new ConcurrentModel();
+
+            tagController.tags(model, "");
+
+            List<Tag> tags = (List<Tag>) model.getAttribute("tags");
+            assertThat(tags).hasSize(2);
+            assertThat(tags.getFirst().getName()).isEqualTo("Spring");
         }
 
         @Test
@@ -68,11 +85,12 @@ public class TagControllerTest {
 
             List<Tag> tags = (List<Tag>) concurrentModel.getAttribute("tags");
             assertThat(tags).hasSize(1);
+            assertThat(tags.getFirst().getName()).isEqualTo("jdbc");
         }
 
         @SuppressWarnings("unchecked")
         @Test
-        void tagsShouldReturnModelWithTagsBasedOnSearchTextIfSearchTextEmpty() {
+        void tagsShouldReturnModelWithValidationMessageIfUserClickedOnSearchWithoutSearchAnything() {
             Bookmark bookmarkOne = new Bookmark("Bookmark 1", "Bookmark 1 url", LocalDate.now(), List.of(new Tag("Spring")));
             Bookmark bookmarkTwo = new Bookmark("Bookmark 2", "Bookmark 2 url", LocalDate.now(), List.of(new Tag("jdbc")));
             BookmarkRepository bookmarkRepository = new InMemoryBookmarkRepository(List.of(bookmarkOne, bookmarkTwo));
