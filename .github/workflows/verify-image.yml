@@ -1,0 +1,34 @@
+name: Verify Image
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Verify Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Pull jbms image
+        run: docker pull ghcr.io/abhishekmalvadkar/jbms:latest
+
+      - name: Show all images
+        run: docker images
+
+      - name: Run jbms image as container in detached mode
+        run: docker run --name jbms -p 8080:8080 -d ghcr.io/abhishekmalvadkar/jbms:latest
+
+      - name: Show all running container
+        run: docker ps
+
+      - name: Show logs from jbms container
+        run: docker logs jbms
+
+      - name: Verify / endpoint
+        run: curl http://localhost:8080
+
+      - name: Verify /bookmarks endpoint
+        run: curl http://localhost:8080/bookmarks
+
+      - name: Verify /tags endpoint
+        run: curl http://localhost:8080/tags
