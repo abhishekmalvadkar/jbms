@@ -19,7 +19,8 @@ class FileBookmarkRepositoryTest extends AbstractIT {
     @ParameterizedTest
     @ValueSource(strings = {
             "https://tinyurl.com/bdcdvrj7",
-            "https://tinyurl.com/bd9sf5h3"
+            "https://tinyurl.com/bd9sf5h3",
+            "https://tinyurl.com/4acrayac"
     })
     void shouldOnlyOneBookmarkExistsWithGivenUrl(String bookmarkUrl) {
         List<Bookmark> bookmarks = bookmarkRepository.byUrl(bookmarkUrl);
